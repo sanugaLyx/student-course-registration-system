@@ -1,0 +1,125 @@
+<!--
+  ─────────────────────────────────────────────────────────────
+  📁 FILE: Frontend/html/students.html
+  🏗  LAYER: Frontend — View (HTML)
+  📋 ROLE: Admin view for managing Students.
+  ─────────────────────────────────────────────────────────────
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="SCRS — Student Management"/>
+<title>SCRS — Students</title>
+<!-- [L1] Webfonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<!-- [L1] Toast container -->
+<div id="toast-container"></div>
+<div class="app-shell">
+  <!-- [L2] Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon"><span class="material-icons-round">school</span></div><div class="sidebar-logo-name">SCRS<span>SE1020 Project</span></div></div>
+    <div class="sidebar-user"><div class="sidebar-avatar" id="sb-avatar">U</div><div class="sidebar-user-info"><div class="sidebar-user-name" id="sb-name">User</div><div class="sidebar-user-role" id="sb-role">—</div></div></div>
+    <nav class="sidebar-nav" id="sidebar-nav-main"></nav>
+    <div class="sidebar-footer"><button class="nav-item" onclick="logout()" style="color:var(--col-error)"><span class="material-icons-round" style="color:var(--col-error)">logout</span>Sign Out</button></div>
+  </aside>
+  
+  <div class="main-content">
+    <!-- [L1] Topbar -->
+    <div class="topbar">
+      <div class="topbar-title"><h2>Student Management</h2><p>SE1020 — Student Course Registration System</p></div>
+      <div class="topbar-actions">
+        <button class="btn btn-icon btn-outline notif-btn"><span class="material-icons-round">notifications_none</span><span class="notif-dot"></span></button>
+        <button class="btn btn-secondary btn-sm" onclick="logout()"><span class="material-icons-round">logout</span>Sign Out</button>
+      </div>
+    </div>
+    
+    <div class="page-body">
+      <!-- [L2] Action Toolbar (Search and Filters) -->
+      <div class="toolbar">
+        <div class="search-box">
+          <span class="material-icons-round">search</span>
+          <!-- [L1] Triggers local filtering on text input -->
+          <input type="text" placeholder="Search students..." id="search-students" oninput="filterStudents()"/>
+        </div>
+        
+        <!-- [L1] Polymorphic Sub-type Filters (Undergraduate vs Postgraduate) -->
+        <div class="chip-row" id="filter-chips-students" style="margin-bottom:0">
+          <span class="chip active" data-filter="ALL" onclick="filterStudentChip(this,'ALL')">All</span>
+          <span class="chip" data-filter="UG" onclick="filterStudentChip(this,'UG')">Undergraduate</span>
+          <span class="chip" data-filter="PG" onclick="filterStudentChip(this,'PG')">Postgraduate</span>
+        </div>
+        <!-- [L1] Add Student triggers modal logic -->
+        <button class="btn btn-primary" id="btn-add-student" onclick="openModal('modal-student')"><span class="material-icons-round">add</span>Add Student</button>
+      </div>
+      
+      <!-- [L2] Data Table -->
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Department</th><th>Type</th><th>Phone</th><th>Actions</th></tr></thead>
+            <!-- [L1] Data injected here by students.js -->
+            <tbody id="students-tbody"><tr class="loading-row"><td colspan="7"><span class="spinner"></span>Loading students...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- [L2] Student CRUD Modal -->
+<div id="modal-student" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-student-title">Add New Student</h3>
+      <button class="btn btn-icon btn-outline" onclick="closeModal('modal-student')"><span class="material-icons-round">close</span></button>
+    </div>
+    <div id="modal-student-alert" class="alert alert-error hidden"><span class="material-icons-round">error_outline</span><span id="modal-student-alert-text"></span></div>
+    
+    <!-- [L1] Form Inputs -->
+    <div class="field-row">
+      <div class="field"><label>Student ID</label><input type="text" id="st-id" placeholder="e.g. S004"/></div>
+      <!-- [L1] Determines the polymorphic subclass (Undergrad/Postgrad) -->
+      <div class="field"><label>Type</label><select id="st-type"><option value="UG">Undergraduate</option><option value="PG">Postgraduate</option></select></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>First Name</label><input type="text" id="st-first" placeholder="First name"/></div>
+      <div class="field"><label>Last Name</label><input type="text" id="st-last" placeholder="Last name"/></div>
+    </div>
+    <div class="field"><label>Email</label><input type="email" id="st-email" placeholder="student@email.com"/></div>
+    <div class="field-row">
+      <div class="field"><label>Password</label><input type="password" id="st-pass" placeholder="Password"/></div>
+      <div class="field"><label>Phone</label><input type="tel" id="st-phone" placeholder="0771234567"/></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Date of Birth</label><input type="date" id="st-dob"/></div>
+      <div class="field"><label>Department</label><input type="text" id="st-dept" placeholder="e.g. CS"/></div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-student')">Cancel</button>
+      <!-- [L1] Trigger save logic -->
+      <button class="btn btn-primary" onclick="saveStudent()"><span class="material-icons-round">save</span>Save Student</button>
+    </div>
+  </div>
+</div>
+
+<!-- [L2] Confirm Delete Modal -->
+<div id="modal-confirm" class="modal-overlay hidden confirm-modal">
+  <div class="modal">
+    <div class="modal-header"><div class="confirm-icon"><span class="material-icons-round">delete_outline</span></div><h3>Confirm Delete</h3><p id="confirm-text" style="color:var(--col-500);font-size:.875rem;text-align:center">Are you sure?</p></div>
+    <div class="modal-footer" style="justify-content:center"><button class="btn btn-outline" onclick="closeModal('modal-confirm')">Cancel</button><button class="btn btn-danger" id="confirm-delete-btn"><span class="material-icons-round">delete</span>Delete</button></div>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script src="../js/students.js"></script>
+</body>
+</html>

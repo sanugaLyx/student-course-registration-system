@@ -59,9 +59,9 @@ public class StudentController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable String id) {
-        studentService.deleteStudent(id);
-        return ResponseEntity.ok(Map.of("message", "Student deleted"));
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> delete(@PathVariable String id) {
+//        studentService.deleteStudent(id);
+//        return ResponseEntity.ok(Map.of("message", "Student deleted"));
+//    }
 }
