@@ -12,7 +12,7 @@ package com.scrs.service;
 
 import com.scrs.model.Student;
 import com.scrs.repository.StudentRepository;
-import com.scrs.repository.EnrollmentRepository;
+//import com.scrs.repository.EnrollmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class StudentService {
 
     @Autowired private StudentRepository studentRepository;
-    @Autowired private EnrollmentRepository enrollmentRepository;
+    //@Autowired private EnrollmentRepository enrollmentRepository;
 
 
     public List<Student> getAllStudents() {
@@ -65,12 +65,12 @@ public class StudentService {
     }
 
 
-    @Transactional
-    public void deleteStudent(String id) {
-
-        enrollmentRepository.findByStudentId(id).forEach(e -> enrollmentRepository.delete(e));
-        
-
-        studentRepository.deleteById(id);
-    }
+//    @Transactional
+//    public void deleteStudent(String id) {
+//
+//        enrollmentRepository.findByStudentId(id).forEach(e -> enrollmentRepository.delete(e));
+//
+//
+//        studentRepository.deleteById(id);
+//    }
 }
