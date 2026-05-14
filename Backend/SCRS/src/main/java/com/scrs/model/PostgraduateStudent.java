@@ -22,7 +22,6 @@ public class PostgraduateStudent extends Student {
 
     public PostgraduateStudent() { super(); }
 
-
     @Override
     public int getEnrollmentLimit() {
         return 4;

@@ -13,7 +13,7 @@
  * ─────────────────────────────────────────────────────────────
  */
 
-package com.scrs.model; // [L1] Part of the model/domain layer
+package com.scrs.model;
 
 
 import com.fasterxml.jackson.annotation.JsonSubTypes; // [L1] Maps JSON "type" values to concrete Java classes
@@ -55,7 +55,7 @@ public abstract class Student extends User {
     public abstract int getEnrollmentLimit();
 
     public String getType() {
-        return (this instanceof UndergraduateStudent) ? "UG" : "PG"; // [L1] Returns type based on runtime class
+        return (this instanceof UndergraduateStudent) ? "UG" : "PG";
     }
 
 
