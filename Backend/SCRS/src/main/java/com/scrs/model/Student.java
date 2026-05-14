@@ -16,10 +16,10 @@
 package com.scrs.model;
 
 
-import com.fasterxml.jackson.annotation.JsonSubTypes; // [L1] Maps JSON "type" values to concrete Java classes
-import com.fasterxml.jackson.annotation.JsonTypeInfo; // [L1] Tells Jackson to look for a "type" field in JSON to determine which subclass to create
+import com.fasterxml.jackson.annotation.JsonSubTypes; 
+import com.fasterxml.jackson.annotation.JsonTypeInfo; 
 
-// [L1] JPA annotations for database mapping and inheritance strategy
+
 import jakarta.persistence.*;
 
 @Entity
