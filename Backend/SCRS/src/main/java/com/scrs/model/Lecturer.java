@@ -13,25 +13,39 @@
 
 package com.scrs.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes; // [L1] Maps JSON type values to Java subclasses
+import com.fasterxml.jackson.annotation.JsonTypeInfo; // [L1] Enables polymorphic JSON deserialization
 import jakarta.persistence.*;
 
+
 @Entity
+@Table(name = "lecturers")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type")
 @JsonSubTypes({
+        @JsonSubTypes.Type(value = FullTimeLecturer.class, name = "FT"),
+        @JsonSubTypes.Type(value = PartTimeLecturer.class, name = "PT")
 })
+public abstract class Lecturer extends User {
 
     @Id
+    @Column(name = "lecturer_id")
     private String lecturerId;
 
+    @Column(name = "department")
     private String department;
 
+    @Column(name = "course_id")
+    private String courseId;
 
+    public Lecturer() { super(); }
 
     @Override
+    public String getRole()          { return "LECTURER"; }
 
     @Override
+    public String getDashboardPath() { return "dashboard.html"; }
 
 
     public abstract int getMaxCourses();
