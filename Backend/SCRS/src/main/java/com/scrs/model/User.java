@@ -19,10 +19,10 @@ package com.scrs.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-// [L1] JPA annotations for mapping Java fields to database columns
+
 import jakarta.persistence.Column;
 
-// [L1] Marks this class as a JPA superclass whose fields are inherited by entity subclasses
+
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
