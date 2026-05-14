@@ -4,7 +4,8 @@
  * 🏗  LAYER: Backend — Service Layer (Business Logic)
  * 📋 ROLE: Handles business logic for Students. Includes manual cascading
  *          deletes to remove enrollments when a student is deleted.
- * 🔗 DEPENDS ON: StudentRepository, EnrollmentRepository
+ *          Supports changing the discriminator type (UG <-> PG) via native SQL.
+ * 🔗 DEPENDS ON: StudentRepository, EnrollmentRepository, EntityManager
  * ─────────────────────────────────────────────────────────────
  */
 
@@ -12,7 +13,8 @@ package com.scrs.service;
 
 import com.scrs.model.Student;
 import com.scrs.repository.StudentRepository;
-//import com.scrs.repository.EnrollmentRepository;
+import com.scrs.repository.EnrollmentRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +26,8 @@ import java.util.Optional;
 public class StudentService {
 
     @Autowired private StudentRepository studentRepository;
-    //@Autowired private EnrollmentRepository enrollmentRepository;
+    @Autowired private EnrollmentRepository enrollmentRepository;
+    @Autowired private EntityManager entityManager;
 
 
     public List<Student> getAllStudents() {
@@ -49,7 +52,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-
+    @Transactional
     public Student updateStudent(String id, Student updated) {
         Student existing = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found: " + id));
@@ -57,20 +60,36 @@ public class StudentService {
 
         existing.setFirstName(updated.getFirstName());
         existing.setLastName(updated.getLastName());
+        existing.setEmail(updated.getEmail());
         existing.setDepartment(updated.getDepartment());
         existing.setDob(updated.getDob());
         existing.setPhoneNumber(updated.getPhoneNumber());
-        
-        return studentRepository.save(existing);
+
+
+        if (updated.getPassword() != null && !updated.getPassword().isBlank()) {
+            existing.setPassword(updated.getPassword());
+        }
+
+        studentRepository.save(existing);
+
+        String newType = updated.getType();
+        if (newType != null && !newType.equals(existing.getType())) {
+            studentRepository.updateType(id, newType);
+            entityManager.flush();
+            entityManager.clear();
+        }
+
+
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found after update: " + id));
     }
 
+    @Transactional
+    public void deleteStudent(String id) {
 
-//    @Transactional
-//    public void deleteStudent(String id) {
-//
-//        enrollmentRepository.findByStudentId(id).forEach(e -> enrollmentRepository.delete(e));
-//
-//
-//        studentRepository.deleteById(id);
-//    }
+        enrollmentRepository.findByStudentId(id).forEach(e -> enrollmentRepository.delete(e));
+
+
+        studentRepository.deleteById(id);
+    }
 }

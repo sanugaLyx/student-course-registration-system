@@ -30,6 +30,7 @@ public abstract class User {
 
 
 
+
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
@@ -55,7 +56,7 @@ public abstract class User {
 
 
     public abstract String getRole();
-    public abstract String getDashboardPath(); 
+    public abstract String getDashboardPath();
 
 
 
