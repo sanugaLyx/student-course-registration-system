@@ -33,20 +33,15 @@ import jakarta.persistence.*;
 
     @Override
 
-    /*
-     * [L2] getMaxCourses() — Abstract Polymorphic Method
-     * FullTimeLecturer → 5 courses max
-     * PartTimeLecturer → 2 courses max
-     * Currently defined but not enforced in the service layer.
-     */
+
     public abstract int getMaxCourses();
 
-    // [L2] Returns "FT" or "PT" for JSON serialization — mirrors the discriminator value
+
     public String getType() {
         return (this instanceof FullTimeLecturer) ? "FT" : "PT";
     }
 
-    // ── Getters and Setters ────────────────────────────────────
+
     public String getLecturerId()              { return lecturerId; }
     public void   setLecturerId(String id)     { this.lecturerId = id; }
 
