@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="SCRS Dashboard — Your personalized overview"/>
+<title>SCRS — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+
+<div id="toast-container"></div>
+
+
+<div class="app-shell">
+  
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon"><span class="material-icons-round">school</span></div>
+      <div class="sidebar-logo-name">SCRS<span>SE1020 Project</span></div>
+    </div>
+
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" id="sb-avatar">U</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sb-name">User</div>
+        <div class="sidebar-user-role" id="sb-role">—</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebar-nav-main"></nav>
+    <div class="sidebar-footer">
+      <button class="nav-item" onclick="logout()" style="color:var(--col-error)">
+        <span class="material-icons-round" style="color:var(--col-error)">logout</span>Sign Out
+      </button>
+    </div>
+  </aside>
+
+
+  <div class="main-content">
+    
+
+    <div class="topbar">
+      <div class="topbar-title">
+        <h2>Dashboard</h2>
+        <p>SE1020 — Student Course Registration System</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-icon btn-outline notif-btn"><span class="material-icons-round">notifications_none</span><span class="notif-dot"></span></button>
+        <button class="btn btn-secondary btn-sm" onclick="logout()"><span class="material-icons-round">logout</span>Sign Out</button>
+      </div>
+    </div>
+
+
+    <div class="page-body">
+      
+
+      <div id="student-dashboard">
+        
+
+        <div class="stats-grid">
+          <div class="card stat-card">
+            <div class="card-header"><div class="card-title">My Enrollments</div><div class="card-icon icon-green"><span class="material-icons-round">menu_book</span></div></div>
+            <div class="card-value" id="dash-enrollment-count">—</div>
+            <div class="card-sub">Active courses this semester</div>
+          </div>
+          <div class="card stat-card">
+            <div class="card-header"><div class="card-title">Enrollment Limit</div><div class="card-icon icon-dark"><span class="material-icons-round">donut_large</span></div></div>
+            <div class="card-value" id="dash-limit">6</div> <!-- [L1] Updated via polymorphic limit (4 for PG, 6 for UG) -->
+            <div class="card-sub">Max courses allowed</div>
+          </div>
+          <div class="card stat-card">
+            <div class="card-header"><div class="card-title">Completed</div><div class="card-icon icon-mid"><span class="material-icons-round">verified</span></div></div>
+            <div class="card-value" id="dash-completed">0</div>
+            <div class="card-sub">Courses completed</div>
+          </div>
+        </div>
+
+
+        <div class="overview-grid">
+          <div class="card" style="padding:24px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+              <h3>My Courses</h3>
+              <a class="btn btn-tonal btn-sm" href="enrollments.html">View All</a>
+            </div>
+
+            <div id="dash-courses-list"><div class="empty-state" style="padding:32px"><span class="material-icons-round">hourglass_empty</span><p>Loading...</p></div></div>
+          </div>
+          <div class="card" style="padding:24px">
+            <h3 style="margin-bottom:16px">Quick Actions</h3>
+            <a class="quick-link" href="enrollments.html"><span class="material-icons-round">add_circle_outline</span>Enroll in Course<span class="material-icons-round ql-arrow">arrow_forward</span></a>
+            <a class="quick-link" href="student-profile.html"><span class="material-icons-round">account_circle</span>My Profile<span class="material-icons-round ql-arrow">arrow_forward</span></a>
+            <a class="quick-link" href="courses.html"><span class="material-icons-round">library_books</span>Browse Courses<span class="material-icons-round ql-arrow">arrow_forward</span></a>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="lecturer-dashboard" style="display:none">
+        <div class="stats-grid">
+          <div class="card stat-card">
+            <div class="card-header"><div class="card-title">Assigned Courses</div><div class="card-icon icon-green"><span class="material-icons-round">school</span></div></div>
+            <div class="card-value" id="lec-course-count">—</div>
+            <div class="card-sub">Active course assignments</div>
+          </div>
+          <div class="card stat-card">
+            <div class="card-header"><div class="card-title">Max Courses</div><div class="card-icon icon-dark"><span class="material-icons-round">assignment</span></div></div>
+            <div class="card-value" id="lec-max-courses">5</div> <!-- [L1] Updated via polymorphic limit (5 for FT, 2 for PT) -->
+            <div class="card-sub">Maximum course capacity</div>
+          </div>
+        </div>
+        <div class="card" style="padding:24px">
+          <h3 style="margin-bottom:16px">Quick Actions</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <a class="quick-link" href="courses.html"><span class="material-icons-round">library_books</span>View Courses<span class="material-icons-round ql-arrow">arrow_forward</span></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script src="../js/dashboard.js"></script>
+</body>
+</html>
