@@ -54,6 +54,7 @@ public class DepartmentController {
         }
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         try {

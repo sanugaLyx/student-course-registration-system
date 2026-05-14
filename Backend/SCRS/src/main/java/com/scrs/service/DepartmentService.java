@@ -1,17 +1,8 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/service/DepartmentService.java
- * 🏗  LAYER: Backend — Service Layer (Business Logic)
- * 📋 ROLE: Manages Departments. Enforces a business rule preventing
- *          the deletion of a department if it still has active courses.
- * 🔗 DEPENDS ON: DepartmentRepository, CourseRepository
- * ─────────────────────────────────────────────────────────────
- */
 
 package com.scrs.service;
 
 import com.scrs.model.Department;
-//import com.scrs.repository.CourseRepository;
+import com.scrs.repository.CourseRepository;
 import com.scrs.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +12,7 @@ import java.util.*;
 public class DepartmentService {
 
     @Autowired private DepartmentRepository departmentRepository;
-    //@Autowired private CourseRepository courseRepository;
+    @Autowired private CourseRepository courseRepository;
 
 
     public List<Department> getAllDepartments() {
@@ -47,15 +38,15 @@ public class DepartmentService {
         return departmentRepository.save(existing);
     }
 
-//    public void deleteDepartment(String id) {
-//
-//        boolean hasLinkedCourses = courseRepository.findAll().stream()
-//                .anyMatch(c -> id.equals(c.getDepartmentId()));
-//
-//        if (hasLinkedCourses)
-//
-//            throw new RuntimeException("Cannot delete department with active courses");
-//
-//        departmentRepository.deleteById(id);
-//    }
+    public void deleteDepartment(String id) {
+
+        boolean hasLinkedCourses = courseRepository.findAll().stream()
+                .anyMatch(c -> id.equals(c.getDepartmentId()));
+
+        if (hasLinkedCourses)
+
+            throw new RuntimeException("Cannot delete department with active courses");
+
+        departmentRepository.deleteById(id);
+    }
 }

@@ -1,13 +1,3 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/model/Department.java
- * 🏗  LAYER: Backend — JPA Domain Model (Concrete Entity)
- * 📋 ROLE: Represents an academic department. Maps to 'departments' table.
- *          Extends the non-JPA Faculty class to demonstrate standard
- *          Java inheritance alongside JPA persistence.
- * 🔗 EXTENDS: Faculty
- * ─────────────────────────────────────────────────────────────
- */
 
 package com.scrs.model;
 
@@ -36,6 +26,7 @@ public class Department extends Faculty {
         this.departmentName = departmentName;
         this.deanId         = deanId;
     }
+
 
     @Override
     public String generateReport() {
