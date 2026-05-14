@@ -17,41 +17,35 @@ import com.fasterxml.jackson.annotation.JsonSubTypes; // [L1] Maps JSON type val
 import com.fasterxml.jackson.annotation.JsonTypeInfo; // [L1] Enables polymorphic JSON deserialization
 import jakarta.persistence.*;
 
-/*
- * [L2] Same inheritance pattern as Student:
- *   - @Inheritance(SINGLE_TABLE): FT and PT lecturers share the 'lecturers' table
- *   - @DiscriminatorColumn("type"): "FT" or "PT" stored in the type column
- *   - @JsonTypeInfo + @JsonSubTypes: Jackson creates FullTimeLecturer or PartTimeLecturer
- *     based on the "type" field in JSON, avoiding "cannot instantiate abstract class" errors
- */
+
 @Entity
-@Table(name = "lecturers") // [L1] Maps to the 'lecturers' database table
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // [L1] FT + PT share one table
-@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING) // [L1] 'type' column: "FT" or "PT"
+@Table(name = "lecturers")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = FullTimeLecturer.class, name = "FT"), // [L1] JSON "FT" → FullTimeLecturer
-        @JsonSubTypes.Type(value = PartTimeLecturer.class, name = "PT")  // [L1] JSON "PT" → PartTimeLecturer
+        @JsonSubTypes.Type(value = FullTimeLecturer.class, name = "FT"),
+        @JsonSubTypes.Type(value = PartTimeLecturer.class, name = "PT")
 })
-public abstract class Lecturer extends User { // [L1] Abstract — cannot be instantiated directly
+public abstract class Lecturer extends User {
 
     @Id
-    @Column(name = "lecturer_id") // [L1] Primary key for lecturers table
+    @Column(name = "lecturer_id")
     private String lecturerId;
 
-    @Column(name = "department") // [L1] Which department this lecturer belongs to
+    @Column(name = "department")
     private String department;
 
-    @Column(name = "course_id") // [L1] The course this lecturer is currently assigned to teach
-    private String courseId; // [L1] FK → Course (stored as String, not a JPA relationship)
+    @Column(name = "course_id")
+    private String courseId;
 
-    public Lecturer() { super(); } // [L1] Required by JPA
-
-    @Override
-    public String getRole()          { return "LECTURER"; } // [L1] Used by AuthController for role identification
+    public Lecturer() { super(); }
 
     @Override
-    public String getDashboardPath() { return "dashboard.html"; } // [L1] Lecturers go to the shared dashboard
+    public String getRole()          { return "LECTURER"; }
+
+    @Override
+    public String getDashboardPath() { return "dashboard.html"; }
 
     /*
      * [L2] getMaxCourses() — Abstract Polymorphic Method
