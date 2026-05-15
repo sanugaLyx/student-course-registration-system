@@ -1,0 +1,116 @@
+<!--
+  ─────────────────────────────────────────────────────────────
+  📁 FILE: Frontend/html/enrollments.html
+  🏗  LAYER: Frontend — View (HTML)
+  📋 ROLE: Manages Student Enrollments. Students can enroll/drop. 
+           Deans can manage all enrollments.
+  ─────────────────────────────────────────────────────────────
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="SCRS — Enrollment Management"/>
+<title>SCRS — Enrollments</title>
+<!-- [L1] Webfonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<!-- [L1] Toast container -->
+<div id="toast-container"></div>
+<div class="app-shell">
+  
+  <!-- [L2] Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-icon"><span class="material-icons-round">school</span></div><div class="sidebar-logo-name">SCRS<span>SE1020 Project</span></div></div>
+    <!-- [L1] User details dynamically filled -->
+    <div class="sidebar-user"><div class="sidebar-avatar" id="sb-avatar">U</div><div class="sidebar-user-info"><div class="sidebar-user-name" id="sb-name">User</div><div class="sidebar-user-role" id="sb-role">—</div></div></div>
+    <nav class="sidebar-nav" id="sidebar-nav-main"></nav>
+    <div class="sidebar-footer"><button class="nav-item" onclick="logout()" style="color:var(--col-error)"><span class="material-icons-round" style="color:var(--col-error)">logout</span>Sign Out</button></div>
+  </aside>
+  
+  <div class="main-content">
+    <!-- [L1] Topbar -->
+    <div class="topbar">
+      <div class="topbar-title"><h2>Enrollment Management</h2><p>SE1020 — Student Course Registration System</p></div>
+      <div class="topbar-actions"><button class="btn btn-secondary btn-sm" onclick="logout()"><span class="material-icons-round">logout</span>Sign Out</button></div>
+    </div>
+    
+    <div class="page-body">
+      <!-- [L2] Action Toolbar (Search and Filters) -->
+      <div class="toolbar">
+        <div class="search-box">
+          <span class="material-icons-round">search</span>
+          <!-- [L1] Triggers JS local filter on keypress -->
+          <input type="text" placeholder="Search enrollments..." id="search-enrollments" oninput="filterEnrollments()"/>
+        </div>
+        
+        <!-- [L1] Filter Chips for Status -->
+        <div class="chip-row" id="filter-chips-enrollments" style="margin-bottom:0">
+          <span class="chip active" onclick="filterEnrollChip(this,'ALL')">All</span>
+          <span class="chip" onclick="filterEnrollChip(this,'ACTIVE')">Active</span>
+          <span class="chip" onclick="filterEnrollChip(this,'DROPPED')">Dropped</span>
+          <span class="chip" onclick="filterEnrollChip(this,'COMPLETED')">Completed</span>
+        </div>
+        <button class="btn btn-primary" id="btn-enroll" onclick="openEnrollModal()"><span class="material-icons-round">add</span>Enroll</button>
+      </div>
+      
+      <!-- [L2] Data Table -->
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Student ID</th><th>Course ID</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+            <!-- [L1] Data injected here by enrollments.js -->
+            <tbody id="enrollments-tbody"><tr class="loading-row"><td colspan="6"><span class="spinner"></span>Loading enrollments...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- [L2] CRUD Modal for Enrollments (Hidden by default) -->
+<div id="modal-enroll" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Enroll in Course</h3>
+      <button class="btn btn-icon btn-outline" onclick="closeModal('modal-enroll')"><span class="material-icons-round">close</span></button>
+    </div>
+    <div id="modal-enroll-alert" class="alert alert-error hidden"><span class="material-icons-round">error_outline</span><span id="modal-enroll-alert-text"></span></div>
+    
+    <!-- [L1] Form Inputs -->
+    <!-- [L1] studentId input is locked if the user is a Student -->
+    <div class="field"><label>Student ID</label><input type="text" id="enr-student" placeholder="e.g. S001"/></div>
+    <div class="field"><label>Course ID</label><input type="text" id="enr-course" placeholder="e.g. CS101"/></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-enroll')">Cancel</button>
+      <!-- [L1] Trigger save logic -->
+      <button class="btn btn-primary" onclick="saveEnrollment()"><span class="material-icons-round">how_to_reg</span>Enroll</button>
+    </div>
+  </div>
+</div>
+
+<!-- [L2] Generic Confirmation Modal (Triggered by auth.js) -->
+<div id="modal-confirm" class="modal-overlay hidden confirm-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="confirm-icon"><span class="material-icons-round">delete_outline</span></div>
+      <h3>Confirm Delete</h3>
+      <p id="confirm-text" style="color:var(--col-500);font-size:.875rem;text-align:center">Are you sure?</p>
+    </div>
+    <div class="modal-footer" style="justify-content:center">
+      <button class="btn btn-outline" onclick="closeModal('modal-confirm')">Cancel</button>
+      <button class="btn btn-danger" id="confirm-delete-btn"><span class="material-icons-round">delete</span>Delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script src="../js/enrollments.js"></script>
+</body>
+</html>
