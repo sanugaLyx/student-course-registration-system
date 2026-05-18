@@ -1,13 +1,4 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/repository/StudentRepository.java
- * 🏗  LAYER: Backend — Data Access Layer (Repository)
- * 📋 ROLE: Interface for database operations on the 'students' table.
- *          Since Student uses SINGLE_TABLE inheritance, this repository
- *          handles both UndergraduateStudent and PostgraduateStudent.
- * 🔗 USED BY: StudentService
- * ─────────────────────────────────────────────────────────────
- */
+
 
 package com.scrs.repository;
 
