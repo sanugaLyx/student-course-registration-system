@@ -1,11 +1,4 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/repository/DeanRepository.java
- * 🏗  LAYER: Backend — Data Access Layer (Repository)
- * 📋 ROLE: Interface for database operations on the 'deans' table.
- * 🔗 USED BY: DeanService
- * ─────────────────────────────────────────────────────────────
- */
+
 
 package com.scrs.repository;
 
