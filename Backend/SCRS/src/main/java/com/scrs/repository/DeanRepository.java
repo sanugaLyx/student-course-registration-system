@@ -1,5 +1,4 @@
 
-
 package com.scrs.repository;
 
 import com.scrs.model.Dean;
