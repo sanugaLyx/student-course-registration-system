@@ -1,13 +1,4 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/service/StudentService.java
- * 🏗  LAYER: Backend — Service Layer (Business Logic)
- * 📋 ROLE: Handles business logic for Students. Includes manual cascading
- *          deletes to remove enrollments when a student is deleted.
- *          Supports changing the discriminator type (UG <-> PG) via native SQL.
- * 🔗 DEPENDS ON: StudentRepository, EnrollmentRepository, EntityManager
- * ─────────────────────────────────────────────────────────────
- */
+
 
 package com.scrs.service;
 
