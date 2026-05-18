@@ -1,17 +1,4 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/model/Student.java
- * 🏗  LAYER: Backend — JPA Domain Model (Abstract Entity)
- * 📋 ROLE: Represents a student in the system. This is an ABSTRACT
- *          class — you cannot create a "Student" directly. You must
- *          create an UndergraduateStudent (UG) or PostgraduateStudent (PG).
- *          Uses JPA SINGLE_TABLE inheritance: both UG and PG rows live
- *          in the same 'students' table, distinguished by a 'type' column.
- * 🔗 EXTENDS: User (inherits name, email, password, etc.)
- *    EXTENDED BY: UndergraduateStudent, PostgraduateStudent
- *    USED BY: StudentService, StudentController, EnrollmentService, AuthController
- * ─────────────────────────────────────────────────────────────
- */
+
 
 package com.scrs.model;
 
