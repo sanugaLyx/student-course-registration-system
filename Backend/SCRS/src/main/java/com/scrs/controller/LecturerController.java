@@ -1,11 +1,3 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/controller/LecturerController.java
- * 🏗  LAYER: Backend — API Layer (REST Controller)
- * 📋 ROLE: Exposes CRUD endpoints for Lecturers.
- * 🔗 DEPENDS ON: LecturerService
- * ─────────────────────────────────────────────────────────────
- */
 
 package com.scrs.controller;
 

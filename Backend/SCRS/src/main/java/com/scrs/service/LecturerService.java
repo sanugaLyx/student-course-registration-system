@@ -1,12 +1,3 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/service/LecturerService.java
- * 🏗  LAYER: Backend — Service Layer (Business Logic)
- * 📋 ROLE: Handles business logic for Lecturers.
- *          Supports changing the discriminator type (FT <-> PT) via native SQL.
- * 🔗 DEPENDS ON: LecturerRepository, EntityManager
- * ─────────────────────────────────────────────────────────────
- */
 
 package com.scrs.service;
 
