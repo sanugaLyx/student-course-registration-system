@@ -1,12 +1,4 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/controller/StudentController.java
- * 🏗  LAYER: Backend — API Layer (REST Controller)
- * 📋 ROLE: Exposes CRUD endpoints for Students. Works seamlessly with
- *          both Undergraduate and Postgraduate classes via Polymorphism.
- * 🔗 DEPENDS ON: StudentService
- * ─────────────────────────────────────────────────────────────
- */
+
 
 package com.scrs.controller;
 
