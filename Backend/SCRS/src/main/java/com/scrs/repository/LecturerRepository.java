@@ -1,11 +1,3 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/repository/LecturerRepository.java
- * 🏗  LAYER: Backend — Data Access Layer (Repository)
- * 📋 ROLE: Interface for database operations on the 'lecturers' table.
- * 🔗 USED BY: LecturerService
- * ─────────────────────────────────────────────────────────────
- */
 
 package com.scrs.repository;
 

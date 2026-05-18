@@ -1,12 +1,3 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/model/FullTimeLecturer.java
- * 🏗  LAYER: Backend — JPA Domain Model (Concrete Entity)
- * 📋 ROLE: Concrete subclass for full-time lecturers. Stored with type = 'FT'.
- *          Overrides getMaxCourses() to return 5 (Polymorphism).
- * 🔗 EXTENDS: Lecturer → User
- * ─────────────────────────────────────────────────────────────
- */
 
 package com.scrs.model;
 
