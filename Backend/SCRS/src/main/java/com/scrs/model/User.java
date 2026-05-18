@@ -1,18 +1,4 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/model/User.java
- * 🏗  LAYER: Backend — JPA Domain Model (Abstract Base Class)
- * 📋 ROLE: Abstract superclass for ALL human entities in the SCRS
- *          (Student, Lecturer, Dean). It defines shared fields
- *          (name, email, password, phone, DOB) so every subclass
- *          inherits them without duplication.
- *          Demonstrates: Abstraction (abstract class + abstract methods)
- *                        Encapsulation (private fields, controlled access)
- * 🔗 USED BY: Student.java, Lecturer.java, Dean.java (all extend User)
- *    DEPENDS ON: Jakarta Persistence (JPA) for ORM mapping,
- *                Jackson (JsonProperty) for JSON serialization control
- * ─────────────────────────────────────────────────────────────
- */
+
 
 package com.scrs.model;
 
