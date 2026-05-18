@@ -1,13 +1,4 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/controller/AuthController.java
- * 🏗  LAYER: Backend — API Layer (REST Controller)
- * 📋 ROLE: Handles global login requests. Since Students, Lecturers,
- *          and Deans all log in from the same page, this controller
- *          checks each repository in sequence to find the user.
- * 🔗 DEPENDS ON: StudentService, LecturerService, DeanService
- * ─────────────────────────────────────────────────────────────
- */
+
 
 package com.scrs.controller;
 
