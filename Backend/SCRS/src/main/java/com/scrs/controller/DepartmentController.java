@@ -1,11 +1,4 @@
-/*
- * ─────────────────────────────────────────────────────────────
- * 📁 FILE: src/main/java/com/scrs/controller/DepartmentController.java
- * 🏗  LAYER: Backend — API Layer (REST Controller)
- * 📋 ROLE: Exposes CRUD endpoints for Departments.
- * 🔗 DEPENDS ON: DepartmentService
- * ─────────────────────────────────────────────────────────────
- */
+
 
 package com.scrs.controller;
 
